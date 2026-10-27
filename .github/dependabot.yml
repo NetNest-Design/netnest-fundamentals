@@ -9,6 +9,9 @@ updates:
       # tsup supports 7; TypeScript 6 keeps getting its own updates meanwhile.
       - dependency-name: typescript
         versions: ['>=7']
+      # Node's type definitions follow the Node floor (engines >=22), so the build never relies on a newer Node API.
+      - dependency-name: '@types/node'
+        versions: ['>=23']
   - package-ecosystem: pip
     directories:
       - /python/netnest-fundamentals
