@@ -11,6 +11,10 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    # Shares the demo token with the CI live job; never run the two at once.
+    concurrency:
+      group: demo-token-live
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444

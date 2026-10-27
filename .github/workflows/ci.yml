@@ -43,6 +43,9 @@ jobs:
   live:
     needs: [js, python]
     runs-on: ubuntu-latest
+    concurrency:
+      group: demo-token-live
+      cancel-in-progress: false
     env:
       NETNEST_LIVE: '1'
     steps:
