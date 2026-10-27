@@ -10,7 +10,7 @@ export default defineConfig({
   dts: true,
   clean: true,
   sourcemap: false,
-  target: 'node20',
+  target: 'node22',
   external: ['ai', 'zod'],
   define: { __NETNEST_VERSION__: JSON.stringify(version) },
 });

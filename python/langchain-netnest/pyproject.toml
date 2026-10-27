@@ -4,13 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "langchain-netnest"
-version = "0.1.3"
+version = "0.1.4"
 description = "LangChain tools for the NetNest Design Fundamentals API: company fundamentals and SEC filing events, with the source filing on every number."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "NetNest Design LLC", email = "registrations@netnestdesign.com" }]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = ["netnest-fundamentals>=0.1.0", "langchain-core>=0.3", "pydantic>=2"]
 keywords = ["langchain", "sec", "edgar", "fundamentals", "financial data", "tools"]
 classifiers = [

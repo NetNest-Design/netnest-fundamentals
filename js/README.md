@@ -1,7 +1,7 @@
 # netnest-fundamentals
 
 TypeScript client for the [NetNest Design Fundamentals API](https://api.netnestdesign.com/docs): company fundamentals
-and SEC filing events, with the source filing on every number. No dependencies; Node 20 or later, browsers, edge.
+and SEC filing events, with the source filing on every number. No dependencies; Node 22 or later, browsers, edge.
 
 ```bash
 npm install netnest-fundamentals

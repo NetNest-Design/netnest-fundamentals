@@ -4,13 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "netnest-fundamentals"
-version = "0.1.3"
+version = "0.1.4"
 description = "Client for the NetNest Design Fundamentals API: company fundamentals and SEC filing events, with the source filing on every number."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "NetNest Design LLC", email = "registrations@netnestdesign.com" }]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = ["httpx>=0.27"]
 keywords = ["sec", "edgar", "fundamentals", "xbrl", "10-k", "10-q", "financial data"]
 classifiers = [
