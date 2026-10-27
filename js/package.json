@@ -1,6 +1,6 @@
 {
   "name": "netnest-fundamentals",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Client for the NetNest Design Fundamentals API: company fundamentals and SEC filing events, with the source filing on every number.",
   "license": "MIT",
   "author": "NetNest Design LLC <registrations@netnestdesign.com>",
@@ -20,7 +20,10 @@
     "10-q",
     "financial-data",
     "ai-sdk",
-    "x402"
+    "x402",
+    "vercel-ai-sdk",
+    "sec-filings",
+    "mcp"
   ],
   "type": "module",
   "main": "./dist/index.cjs",

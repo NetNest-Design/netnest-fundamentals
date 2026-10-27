@@ -25,7 +25,7 @@ const { text } = await generateText({ model, tools: netnestTools({ apiKey: proce
 ```
 
 Six tools: `searchCompany`, `getCompany`, `getFundamentals`, `getHistory`, `getEvents`, `getEventsHead`. Needs `ai`
-and `zod` installed. An API refusal comes back as `{ error }` for the model to read.
+and `zod` installed (tested with `ai` 7.0.155 and `zod` 4.6.7). An API refusal comes back as `{ error }` for the model to read.
 
 ## Notes
 
