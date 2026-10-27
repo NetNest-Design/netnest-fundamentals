@@ -1,5 +1,6 @@
 import json
 import os
+import time
 
 import httpx
 import pytest
@@ -31,6 +32,7 @@ def test_toolkit_has_six_named_tools_with_schemas():
 
 def test_invoke_calls_the_api_and_returns_json():
     calls = []
+    time.sleep(1.1)  # the demo token allows 2 requests a second
     tools = {t.name: t for t in NetNestToolkit(client=client(calls=calls)).get_tools()}
     out = tools["netnest_get_fundamentals"].invoke({"ticker": "AAPL", "metrics": ["revenue"], "period": "ttm"})
     assert json.loads(out) == {"data": [1]}

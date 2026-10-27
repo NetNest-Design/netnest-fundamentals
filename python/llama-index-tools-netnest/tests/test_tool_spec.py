@@ -1,5 +1,6 @@
 import json
 import os
+import time
 
 import httpx
 import pytest
@@ -31,6 +32,7 @@ def test_call_returns_api_json():
 
 
 def test_refusal_is_returned_not_raised():
+    time.sleep(1.1)  # the demo token allows 2 requests a second
     spec = NetNestToolSpec(client=client(404, {"error": {"code": "unknown_ticker", "message": "Ticker not found"}}))
     assert json.loads(spec.get_company("NOPE")) == {"error": {"code": "unknown_ticker", "message": "Ticker not found", "status": 404}}
 

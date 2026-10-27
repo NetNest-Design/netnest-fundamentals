@@ -1,5 +1,6 @@
 import json
 import os
+import time
 
 import httpx
 import pytest
@@ -84,7 +85,11 @@ def test_signup_posts_email_without_key():
 @pytest.mark.skipif(os.environ.get("NETNEST_LIVE") != "1", reason="live test: set NETNEST_LIVE=1")
 def test_live_production():
     with NetNestClient(os.environ.get("NETNEST_API_KEY") or "demo") as c:
+        # The demo token allows 2 requests a second; pace the calls so the smoke never trips it.
+        time.sleep(1.1)
         assert any(r["ticker"] == "AAPL" for r in c.search("apple", limit=3)["results"])
+        time.sleep(1.1)
         rev = next(m for m in c.company("AAPL")["latest"]["annual"] if m["metric"] == "revenue")
         assert rev["value"] > 0 and rev["source_url"].startswith("https://www.sec.gov/")
+        time.sleep(1.1)
         assert len(c.history("NVDA", "revenue", period="annual", limit=2)["data"]) == 2

@@ -1,11 +1,14 @@
 // Live smoke test against production with the public demo key (500 calls a day shared). Runs only with NETNEST_LIVE=1.
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { NetNestClient } from '../src/index';
 
 const live = process.env.NETNEST_LIVE === '1';
 const c = new NetNestClient({ apiKey: process.env.NETNEST_API_KEY || 'demo' });
+// The demo token allows 2 requests a second; pace the calls so the smoke never trips it.
+const pause = () => new Promise((r) => setTimeout(r, 1100));
 
 describe.runIf(live)('production', () => {
+  beforeEach(pause);
   it('search finds Apple', async () => {
     const r = await c.search('apple', { limit: 3 });
     expect(r.results.some((x) => x.ticker === 'AAPL')).toBe(true);
@@ -21,6 +24,7 @@ describe.runIf(live)('production', () => {
   it('fundamentals and history answer with source fields', async () => {
     const f = await c.fundamentals('MSFT', { metrics: ['revenue'], period: 'quarterly' });
     expect(f.data[0].form).toMatch(/^10-[KQ]/);
+    await pause();
     const h = await c.history('NVDA', 'revenue', { period: 'annual', limit: 2 });
     expect(h.data).toHaveLength(2);
   });
