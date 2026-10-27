@@ -12,7 +12,9 @@ import type {
 } from './types';
 
 export const DEFAULT_BASE_URL = 'https://api.netnestdesign.com';
-export const VERSION = '0.1.0';
+// Replaced with package.json's version by the build (tsup.config.ts); unbuilt source (the tests) reads 0.0.0-dev.
+declare const __NETNEST_VERSION__: string | undefined;
+export const VERSION: string = typeof __NETNEST_VERSION__ === 'string' ? __NETNEST_VERSION__ : '0.0.0-dev';
 
 export interface ClientOptions {
   /** An API key (POST /v1/signup), or "demo" to try it. Defaults to the NETNEST_API_KEY environment variable. */

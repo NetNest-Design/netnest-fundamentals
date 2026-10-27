@@ -1,0 +1,17 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /js
+    schedule:
+      interval: weekly
+  - package-ecosystem: pip
+    directories:
+      - /python/netnest-fundamentals
+      - /python/langchain-netnest
+      - /python/llama-index-tools-netnest
+    schedule:
+      interval: weekly
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

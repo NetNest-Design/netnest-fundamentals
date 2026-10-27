@@ -93,6 +93,7 @@ def live(call):
                 raise
 
 
+@pytest.mark.live
 @pytest.mark.skipif(os.environ.get("NETNEST_LIVE") != "1", reason="live test: set NETNEST_LIVE=1")
 def test_live_production():
     with NetNestClient(os.environ.get("NETNEST_API_KEY") or "demo") as c:

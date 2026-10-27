@@ -1,16 +1,27 @@
 name: ci
+# Unit tests for every supported runtime, the JS build and pack, and a live smoke against production. release.yml calls
+# this same workflow before anything publishes, so a release is tested exactly as main is.
 on:
   push:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   js:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22, 24]
     defaults:
       run:
         working-directory: js
@@ -18,7 +29,7 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
         with:
-          node-version: 24
+          node-version: ${{ matrix.node }}
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
@@ -36,16 +47,17 @@ jobs:
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: ${{ matrix.python }}
-      - run: python -m pip install -e "python/netnest-fundamentals[test]" -e "python/langchain-netnest[test]" -e "python/llama-index-tools-netnest[test]"
-      - run: python -m pytest -q python/netnest-fundamentals python/langchain-netnest python/llama-index-tools-netnest
+      - run: python -m pip install -e "python/netnest-fundamentals[test]" -e "python/langchain-netnest[test]" -e "python/llama-index-tools-netnest[test]" "build==1.6.1"
+      - run: python -m pytest -q -m "not live" python
+      - name: build the three distributions
+        run: for p in netnest-fundamentals langchain-netnest llama-index-tools-netnest; do python -m build -o dist "python/$p"; done
 
-  # One job, run in series: the shared demo token allows 2 requests a second.
+  # Not on pull requests: the shared public demo key is for prospective customers, and fork code gets no live calls.
+  # The tests pace each call and retry the shared rate limit.
   live:
+    if: github.event_name != 'pull_request'
     needs: [js, python]
     runs-on: ubuntu-latest
-    concurrency:
-      group: demo-token-live
-      cancel-in-progress: false
     env:
       NETNEST_LIVE: '1'
     steps:
@@ -59,4 +71,4 @@ jobs:
       - run: npm ci && npm run test:live
         working-directory: js
       - run: python -m pip install -e "python/netnest-fundamentals[test]" -e "python/langchain-netnest[test]" -e "python/llama-index-tools-netnest[test]"
-      - run: python -m pytest -q -k live python/netnest-fundamentals python/langchain-netnest python/llama-index-tools-netnest
+      - run: python -m pytest -q -m live python

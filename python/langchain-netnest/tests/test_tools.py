@@ -55,6 +55,7 @@ def live_json(call):
     raise AssertionError(out)
 
 
+@pytest.mark.live
 @pytest.mark.skipif(os.environ.get("NETNEST_LIVE") != "1", reason="live test: set NETNEST_LIVE=1")
 def test_live():
     tools = {t.name: t for t in NetNestToolkit(client=NetNestClient(os.environ.get("NETNEST_API_KEY") or "demo")).get_tools()}

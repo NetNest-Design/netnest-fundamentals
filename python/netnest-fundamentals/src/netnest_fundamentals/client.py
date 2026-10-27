@@ -7,11 +7,16 @@ import os
 from typing import Any, Iterable, Optional, Union
 from urllib.parse import quote
 
+from importlib.metadata import PackageNotFoundError, version
+
 import httpx
 
 from .errors import NetNestError, PaymentRequiredError, RateLimitError
 
-__version__ = "0.1.0"
+try:  # the installed distribution's version, so the User-Agent never drifts from the release
+    __version__ = version("netnest-fundamentals")
+except PackageNotFoundError:  # pragma: no cover - source tree without an install
+    __version__ = "0.0.0-dev"
 DEFAULT_BASE_URL = "https://api.netnestdesign.com"
 
 Period = str  # "annual" | "quarterly" | "ttm"
