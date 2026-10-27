@@ -1,0 +1,10 @@
+node_modules/
+dist/
+dist-py/
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.npmrc
+.env*

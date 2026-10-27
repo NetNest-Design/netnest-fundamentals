@@ -1,0 +1,77 @@
+{
+  "name": "netnest-fundamentals",
+  "version": "0.1.0",
+  "description": "Client for the NetNest Design Fundamentals API: company fundamentals and SEC filing events, with the source filing on every number.",
+  "license": "MIT",
+  "author": "NetNest Design LLC <registrations@netnestdesign.com>",
+  "homepage": "https://api.netnestdesign.com/docs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NetNest-Design/netnest-fundamentals.git",
+    "directory": "js"
+  },
+  "bugs": "https://github.com/NetNest-Design/netnest-fundamentals/issues",
+  "keywords": [
+    "sec",
+    "edgar",
+    "fundamentals",
+    "xbrl",
+    "10-k",
+    "10-q",
+    "financial-data",
+    "ai-sdk",
+    "x402"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./ai-sdk": {
+      "types": "./dist/ai-sdk.d.ts",
+      "import": "./dist/ai-sdk.js",
+      "require": "./dist/ai-sdk.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:live": "vitest run test/live.test.ts",
+    "prepack": "npm run build"
+  },
+  "peerDependencies": {
+    "ai": ">=6",
+    "zod": ">=3.25"
+  },
+  "peerDependenciesMeta": {
+    "ai": {
+      "optional": true
+    },
+    "zod": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "ai": "^7.0.154",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.0",
+    "zod": "^4.1.0"
+  }
+}

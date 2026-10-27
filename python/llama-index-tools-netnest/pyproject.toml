@@ -1,0 +1,31 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "llama-index-tools-netnest"
+version = "0.1.0"
+description = "LlamaIndex tools for the NetNest Design Fundamentals API: company fundamentals and SEC filing events, with the source filing on every number."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "NetNest Design LLC", email = "registrations@netnestdesign.com" }]
+requires-python = ">=3.10"
+dependencies = ["netnest-fundamentals>=0.1.0", "llama-index-core>=0.12"]
+keywords = ["llama-index", "llamaindex", "sec", "edgar", "fundamentals", "financial data", "tools"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Topic :: Office/Business :: Financial",
+]
+
+[project.urls]
+Homepage = "https://api.netnestdesign.com/docs"
+Source = "https://github.com/NetNest-Design/netnest-fundamentals"
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/llama_index"]
