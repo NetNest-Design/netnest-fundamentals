@@ -1,6 +1,6 @@
 {
   "name": "netnest-fundamentals",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Client for the NetNest Design Fundamentals API: company fundamentals and SEC filing events, with the source filing on every number.",
   "license": "MIT",
   "author": "NetNest Design LLC <registrations@netnestdesign.com>",

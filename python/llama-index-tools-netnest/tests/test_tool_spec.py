@@ -32,12 +32,23 @@ def test_call_returns_api_json():
 
 
 def test_refusal_is_returned_not_raised():
-    time.sleep(1.1)  # the demo token allows 2 requests a second
     spec = NetNestToolSpec(client=client(404, {"error": {"code": "unknown_ticker", "message": "Ticker not found"}}))
     assert json.loads(spec.get_company("NOPE")) == {"error": {"code": "unknown_ticker", "message": "Ticker not found", "status": 404}}
+
+
+def live_json(call):
+    """Calls a tool against production. The shared demo token allows 2 requests a second for every caller, so each
+    call is paced and a rate limit refusal is retried. Fails with the body if it never answers."""
+    for _ in range(4):
+        time.sleep(1.5)
+        out = json.loads(call())
+        if out.get("error", {}).get("code") != "rate_limited":
+            return out
+    raise AssertionError(out)
 
 
 @pytest.mark.skipif(os.environ.get("NETNEST_LIVE") != "1", reason="live test: set NETNEST_LIVE=1")
 def test_live():
     spec = NetNestToolSpec(api_key=os.environ.get("NETNEST_API_KEY") or "demo")
-    assert json.loads(spec.get_company("AAPL"))["company"]["cik"] == 320193
+    out = live_json(lambda: spec.get_company("AAPL"))
+    assert out["company"]["cik"] == 320193, out
