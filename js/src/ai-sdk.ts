@@ -34,15 +34,20 @@ async function call<T>(fn: () => Promise<T>): Promise<T | { error: { code: strin
   }
 }
 
-/** The six tools, keyed by name. Declared with the public `Tool` type so the published types depend on `ai` alone. */
-export interface NetNestTools {
+/**
+ * The six tools, keyed by name. Declared with the public `Tool` type so the published types depend on `ai` alone.
+ * A type alias, not an interface: the AI SDK's `ToolSet` has a string index signature, which an alias satisfies and an
+ * interface does not, so the interface made `generateText({ tools: netnestTools() })` fail to compile (0.1.4 and
+ * earlier; found by the vercel/ai tools registry review).
+ */
+export type NetNestTools = {
   searchCompany: Tool;
   getCompany: Tool;
   getFundamentals: Tool;
   getHistory: Tool;
   getEvents: Tool;
   getEventsHead: Tool;
-}
+};
 
 /**
  * All six tools, ready for generateText or streamText:
