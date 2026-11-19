@@ -1,3 +1,5 @@
+> **Retired 2026-11-19.** NetNest Design LLC retired the NetNest Design Fundamentals API. api.netnestdesign.com answers 410 Gone on every path, so these packages no longer work. This repository is archived.
+
 # NetNest Design Fundamentals: client packages
 
 Clients for the [NetNest Design Fundamentals API](https://api.netnestdesign.com/docs): company fundamentals and SEC
